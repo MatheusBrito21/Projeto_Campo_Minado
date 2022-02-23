@@ -90,5 +90,11 @@ public class CampoTeste {
 		
 		assertTrue(campo11.isAberto() && campo22.isAberto());
 	}
+	
+	@Test 
+	void objetivoConcluido(){
+		campo.abrir();
+		assertTrue(campo.objetivoAlcancado());
+	}
 		
 }
