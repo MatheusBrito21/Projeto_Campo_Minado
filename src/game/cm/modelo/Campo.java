@@ -56,7 +56,7 @@ public class Campo {
 			if(minado) {
 				throw new ExplosaoException();
 			}
-			if(vizinhacaSegura()) {
+			if(vizinhancaSegura()) {
 				vizinhos.forEach(v -> v.abrir());
 			}
 			return true;
@@ -65,7 +65,7 @@ public class Campo {
 		}
 	}
 	
-	boolean vizinhacaSegura() {
+	boolean vizinhancaSegura() {
 			return vizinhos.stream().noneMatch(v -> v.minado);
 	}
 	

@@ -18,7 +18,7 @@ public class CampoTeste {
 		campo = new Campo(3, 3);
 	}
 	
-	//testa a adição de um vizinho ao campo atual(3,3)
+	//testa a adiï¿½ï¿½o de um vizinho ao campo atual(3,3)
 	@Test
 	void testeAddVizinhoLados() {
 		Campo vizinho = new Campo(3, 2);
@@ -33,7 +33,7 @@ public class CampoTeste {
 		assertTrue(resultado);
 	}
 	
-	//testa um campo não vizinho de (3,3) - deve retornar false
+	//testa um campo nï¿½o vizinho de (3,3) - deve retornar false
 	@Test
 	void testeNaoVizinho() {
 		Campo vizinho = new Campo(1, 2);
@@ -89,7 +89,6 @@ public class CampoTeste {
 		campo.abrir();
 		
 		assertTrue(campo11.isAberto() && campo22.isAberto());
-		
 	}
 		
 }
