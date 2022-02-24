@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import game.cm.excecao.ExplosaoException;
+
 public class Tabuleiro {
 	private int qtdLinhas;
 	private int qtdColunas;
@@ -22,10 +24,15 @@ public class Tabuleiro {
 	}
 	
 	public void abrirCampo(int linha, int coluna) {
-		listaCampos.parallelStream()
-		.filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
-		.findFirst()
-		.ifPresent(c -> c.abrir());
+		try {
+			listaCampos.parallelStream()
+			.filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
+			.findFirst()
+			.ifPresent(c -> c.abrir());
+		} catch (ExplosaoException e) {
+			listaCampos.forEach(c -> c.setAberto(true));
+			throw e;
+		}
 	}
 	
 	public void marcarCampo(int linha, int coluna) {
@@ -55,10 +62,10 @@ public class Tabuleiro {
 		long minasArmadas = 0;
 		Predicate<Campo> minado = c -> c.isMinado();
 		do {
-			minasArmadas = listaCampos.stream().filter(minado).count();
 			//gera um indice alatorio da lista
 			int campoAleatorio = (int)(Math.random()*listaCampos.size());
 			listaCampos.get(campoAleatorio).minar();
+			minasArmadas = listaCampos.stream().filter(minado).count();
 		} while (minasArmadas < qtdMinas);
 	}
 	
@@ -73,8 +80,23 @@ public class Tabuleiro {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		//primeiro espaço da linha das colunas
+		sb.append("  ");
+		//imprimir os indices das colunas
+		for (int c = 0; c < qtdColunas; c++) {
+			sb.append(" ");
+			sb.append(c);
+			sb.append(" ");
+		}
+		//pular linha do indice
+		sb.append("\n");
+		
 		int i =0;
 		for (int l = 0; l < qtdLinhas; l++) {
+			//imprime os indices das linhas
+			sb.append(l);
+			sb.append(" ");
+			
 			for (int c = 0; c < qtdColunas; c++) {
 				sb.append(" ");
 				sb.append(listaCampos.get(i));

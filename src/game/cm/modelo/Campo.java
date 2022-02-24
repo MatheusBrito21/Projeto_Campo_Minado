@@ -78,6 +78,11 @@ public class Campo {
 	public boolean isFechado() {
 		return !isAberto();
 	}
+	
+	public void setAberto(boolean aberto) {
+		this.aberto = aberto;
+	}
+
 	public boolean isMinado() {
 		return minado;
 	}
