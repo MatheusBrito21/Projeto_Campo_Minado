@@ -7,7 +7,9 @@ import java.util.Scanner;
 import game.cm.excecao.ExplosaoException;
 import game.cm.excecao.SairException;
 import game.cm.modelo.Tabuleiro;
-
+/*
+ * É através dessa classe que a lógica do jogo
+ * será executada */
 public class TabuleiroConsole {
 	
 	private Tabuleiro tabuleiro;
@@ -44,9 +46,13 @@ public class TabuleiroConsole {
 		}
 		
 	}
-	
+	//Lógica do jogo
 	private void cicloDoJogo() {
 		try {
+			/*Executa enquanto todos os elementos da lista de
+			 *campos do Tabuleironão retornarem true para
+			 *o metodo jogoGanho()
+			 * */
 			while (!tabuleiro.jogoGanho()) {
 				System.out.println(tabuleiro);
 				

@@ -23,6 +23,8 @@ public class Tabuleiro {
 		sortearMinas();
 	}
 	
+	/*Recebe as coordenadas do campo que será Marcado
+	  */
 	public void abrirCampo(int linha, int coluna) {
 		try {
 			listaCampos.parallelStream()
@@ -35,6 +37,8 @@ public class Tabuleiro {
 		}
 	}
 	
+	/*Recebe as coordenadas do campo que será Marcado
+	  */
 	public void marcarCampo(int linha, int coluna) {
 		listaCampos.parallelStream()
 		.filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
@@ -42,6 +46,10 @@ public class Tabuleiro {
 		.ifPresent(c -> c.alternarMarcao());
 	}
 	
+	/*
+	 * Gera os campos do tabuleiro
+	 * Utiliza a quantidade de linhas e colunas passadas
+	 * no construtor*/
 	private void gerarCampos() {
 		for (int linha = 0; linha < qtdLinhas; linha++) {
 			for (int coluna = 0; coluna < qtdColunas; coluna++) {
@@ -60,15 +68,21 @@ public class Tabuleiro {
 	
 	private void sortearMinas() {
 		long minasArmadas = 0;
+		//Retorna as minas que serão minadas
 		Predicate<Campo> minado = c -> c.isMinado();
+		//A quantidade de minas será passada no construtor do Tabuleiro
 		do {
-			//gera um indice alatorio da lista
+			//gera um indice alatorio da lista de campos
 			int campoAleatorio = (int)(Math.random()*listaCampos.size());
+			//coloca uma mina no indice gerado
 			listaCampos.get(campoAleatorio).minar();
+			//retorna a quantidade de minas armadas
 			minasArmadas = listaCampos.stream().filter(minado).count();
 		} while (minasArmadas < qtdMinas);
 	}
 	
+	/*Quando o objetivo de todos os campos for alcançado
+	 * o jogo estará ganho*/
 	public boolean jogoGanho() {
 		return listaCampos.stream().allMatch(c -> c.objetivoAlcancado());
 	}
@@ -78,6 +92,7 @@ public class Tabuleiro {
 		sortearMinas();
 	}
 	
+	/*Imprime o Tabuleiro formatado no padrão do Campo Minado*/
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		//primeiro espaço da linha das colunas

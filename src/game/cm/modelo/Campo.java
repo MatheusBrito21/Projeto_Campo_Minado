@@ -21,18 +21,21 @@ public class Campo {
 	}
 	
 	public boolean adicionarVizinho(Campo vizinho) {
-		boolean linhaDiferente = linha != vizinho.linha;
-		boolean colunaDiferente = coluna!= vizinho.coluna;
-		boolean diagonal = linhaDiferente && colunaDiferente;
+		
+		/*Calcula a diferança absoluta entre as coordenadas
+		 * do campo atual e do vizinho
+		 * ex: C(3,3) - V(3,2) = 1 ; C(3,3) - (2,2) = 2;
+		 * O delta geral deve ser igual a 1(lados-cima) ou 2(diagonal)
+		 * */
 		
 		int deltaLinha = Math.abs(linha - vizinho.linha);
 		int deltaColuna = Math.abs(coluna - vizinho.coluna);
 		int deltaGeral = deltaLinha + deltaColuna;
 		
-		if(deltaGeral == 1 && !diagonal) {
+		if(deltaGeral == 1) {
 			vizinhos.add(vizinho);
 			return true;
-		}else if(deltaGeral == 2 && diagonal) {
+		}else if(deltaGeral == 2) {
 			vizinhos.add(vizinho);
 			return true;
 		}
@@ -46,6 +49,12 @@ public class Campo {
 		if(!aberto) {
 			marcado = !marcado;
 		}
+	}
+	
+	/*Verifica quais vizinhos estão minados
+	 * */
+	boolean vizinhancaSegura() {
+		return vizinhos.stream().noneMatch(v -> v.minado);
 	}
 	
 	//abre o campo
@@ -65,9 +74,6 @@ public class Campo {
 		}
 	}
 	
-	boolean vizinhancaSegura() {
-			return vizinhos.stream().noneMatch(v -> v.minado);
-	}
 	
 	public boolean isMarcado() {
 		return marcado;
